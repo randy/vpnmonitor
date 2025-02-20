@@ -17,16 +17,23 @@ PLIST_CONTENT=$(cat <<EOF
     </array>
     <key>RunAtLoad</key>
     <true/>
-    <key>StartInterval</key>
-    <integer>300</integer> <!-- Run every 5 minutes -->
+    <key>KeepAlive</key>
+    <true/>
+    <key>StandardOutPath</key>
+    <string>/tmp/vpn_monitor.log</string>
+    <key>StandardErrorPath</key>
+    <string>/tmp/vpn_monitor.log</string>
 </dict>
 </plist>
 EOF
 )
 
 # Write the plist content to the LaunchAgents directory
-PLIST_PATH=~/Library/LaunchAgents/com.github.randy.vpnmonitor.plist
-echo "$PLIST_CONTENT" > "$PLIST_PATH"
+PLIST=com.github.randy.vpnmonitor.plist
+PLIST_PATH=~/Library/LaunchAgents/
+echo "$PLIST_CONTENT" > "$PLIST"
+cp "$PLIST" "$PLIST_PATH"
+rm "$PLIST"
 
 # Load the plist
 launchctl load "$PLIST_PATH"
